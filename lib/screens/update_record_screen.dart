@@ -41,6 +41,7 @@ class UpdateRecordState extends State<UpdateRecord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text("PCC Services")),
       body: Form(
         key: _formKey,
         child: Padding(
@@ -106,7 +107,7 @@ class UpdateRecordState extends State<UpdateRecord> {
                   height: 20,
                 ),
                 SizedBox(
-                  height: 150.0,
+                  height: 120.0,
                   child: TextFormField(
                     controller: descriptionController,
                     decoration: InputDecoration(

@@ -5,42 +5,55 @@ import 'screens/create_record_screen.dart';
 
 void main() => runApp(const MyApp());
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'PCC Services',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('PCC Services'),
-            centerTitle: true,
-            bottom: const TabBar(tabs: [
-              Tab(
-                text: 'Records',
-                icon: Icon(Icons.list),
-              ),
-              Tab(
-                text: 'Create',
-                icon: Icon(Icons.add),
-              ),
-            ]),
-          ),
-          body: const TabBarView(
-            children: [RecordsScreen(), InsertRecord()],
-          ),
+        title: 'PCC Services',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage());
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("PCC Services")),
+      body: RecordsScreen(),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            ListTile(
+              title: const Text('View Records'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Create Record'),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => InsertRecord()));
+              },
+            ),
+          ],
         ),
       ),
     );
