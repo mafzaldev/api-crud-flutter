@@ -14,12 +14,17 @@ class _RecordsScreenState extends State<RecordsScreen>
     with AutomaticKeepAliveClientMixin<RecordsScreen> {
   late Future<List<Service>> futureService;
 
+  void callFutureService() {
+    setState(() {
+      print("here now1");
+      futureService = fetchServices();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    setState(() {
-      futureService = fetchServices();
-    });
+    callFutureService();
   }
 
   @override
@@ -27,46 +32,53 @@ class _RecordsScreenState extends State<RecordsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Expanded(
-          child: Center(
-            child: FutureBuilder<List<Service>>(
-              future: futureService,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  final services = snapshot.data!;
-                  return buildList(services);
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
-
-                return const CircularProgressIndicator();
-              },
+    return RefreshIndicator(
+      onRefresh: () async {
+        callFutureService();
+      },
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 50,
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text("Pull down to refresh",
+                  style: const TextStyle(
+                      fontFamily: 'Poppins',
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16.0)),
             ),
           ),
-        ),
-      ],
+          Expanded(
+            child: Center(
+              child: FutureBuilder<List<Service>>(
+                future: futureService,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final services = snapshot.data!;
+                    return buildList(services);
+                  } else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }
+
+                  return const CircularProgressIndicator();
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget buildList(List<Service> services) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        setState(() {
-          futureService = fetchServices();
-        });
+    return ListView.builder(
+      itemCount: services.length,
+      itemBuilder: (context, index) {
+        final service = services[index];
+        return ListItem(service: service, callFutureService: callFutureService);
       },
-      child: ListView.builder(
-        itemCount: services.length,
-        itemBuilder: (context, index) {
-          final service = services[index];
-          return ListItem(service: service);
-        },
-      ),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:api_crud/screens/update_record_screen.dart';
 import 'package:flutter/material.dart';
 import 'screens/view_records_screen.dart';
 import 'screens/create_record_screen.dart';
