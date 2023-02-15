@@ -31,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("PCC Services")),
-      body: RecordsScreen(),
+      body: const RecordsScreen(),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -48,8 +48,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: const Text('Create Record'),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => InsertRecord()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const InsertRecord()));
               },
             ),
           ],

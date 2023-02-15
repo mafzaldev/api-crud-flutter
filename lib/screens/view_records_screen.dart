@@ -16,7 +16,6 @@ class _RecordsScreenState extends State<RecordsScreen>
 
   void callFutureService() {
     setState(() {
-      print("here now1");
       futureService = fetchServices();
     });
   }
@@ -43,7 +42,7 @@ class _RecordsScreenState extends State<RecordsScreen>
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Text("Pull down to refresh",
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontFamily: 'Poppins',
                       color: Colors.grey,
                       fontWeight: FontWeight.w600,

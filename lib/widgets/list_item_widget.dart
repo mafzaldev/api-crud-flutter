@@ -69,8 +69,6 @@ class ListItem extends StatelessWidget {
                                         ? true
                                         : false,
                                   )));
-                      print("here now");
-                      callFutureService();
                     },
                   ),
                   IconButton(
